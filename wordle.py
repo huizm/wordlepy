@@ -1,3 +1,7 @@
+import pathlib
+import random
+
+
 def print_feedback():
     for char in guess[:-1:]:
         print(char, end=" ")
@@ -23,19 +27,33 @@ def print_feedback():
 
 LEN = 5
 GUESSES = 6
-target = "WHIRL" # choose word list according to LEN
 
-prompt = "_ " * (LEN - 1) + "_"
-guess = input(prompt + " (valid try: all caps with no spaces in between)\n").strip()
+# choose target word from word list according to LEN
+wlist = pathlib.Path("words_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
+tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().split(" ")
+target = random.choice(tlist)
 
-for i in range(0, GUESSES):
-    print("Guess", i+1)
+prompt = " (valid try: all caps with no spaces in between)\n"
 
-    if guess == target:
-        print_feedback()
-        print("correct!")
-        break
+guess_count = 0
+while guess_count < GUESSES:
+    guess = input("_ " * (LEN - 1) + "_" + prompt).strip().upper()
+
+    if guess not in wlist:
+        print(guess, "not in word list.")
     else:
-        print_feedback()
-        print("false...")
-        guess = input(prompt + "\n").strip()
+        print("Guess", guess_count+1)
+
+        if guess == target:
+            print_feedback()
+            print("Correct!")
+            break
+        else:
+            print_feedback()
+            print("Wrong...")
+        guess_count += 1
+
+    prompt = "\n" # not show valid try from second try
+
+if guess_count >= GUESSES:
+    print("Barge.")
