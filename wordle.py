@@ -7,20 +7,13 @@ def print_feedback():
         print(char, end=" ")
     print(guess[-1])
     
-    for j in range(0, LEN-1):
+    for j in range(0, LEN):
         if guess[j] == target[j]:
-            print("🟩 ", end="")
+            print("🟩", end="")
         elif guess[j] in set(target):
-            print("🟨 ", end="")
+            print("🟨", end="")
         else:
-            print("⬛ ", end="")
-    
-    if guess[-1] == target[-1]:
-        print("🟩 ")
-    elif guess[-1] in set(target):
-        print("🟨 ")
-    else:
-        print("⬛ ")
+            print("⬛", end="")
 
     return
 
@@ -30,7 +23,7 @@ GUESSES = 6
 
 # choose target word from word list according to LEN
 wlist = pathlib.Path("words_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
-tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().split(" ")
+tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split(" ")
 target = random.choice(tlist)
 
 prompt = " (valid try: all caps with no spaces in between)\n"
@@ -46,14 +39,14 @@ while guess_count < GUESSES:
 
         if guess == target:
             print_feedback()
-            print("Correct!")
+            print("\nCorrect!")
             break
         else:
             print_feedback()
-            print("Wrong...")
+            print("\nWrong...")
         guess_count += 1
 
     prompt = "\n" # not show valid try from second try
-
-if guess_count >= GUESSES:
-    print("Barge.")
+else:
+    if guess_count >= GUESSES:
+        print("Barge. The target was", target)
