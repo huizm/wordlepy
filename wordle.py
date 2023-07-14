@@ -4,7 +4,7 @@ import random
 
 # TODO: this func is not like a python func and must be rewritten
 # TODO: fix doctest
-def print_feedback(guess, target, len):
+def print_feedback(guess: str, target: str, len: int):
     """
     Compare guess word with target and give feedback.
 
@@ -40,8 +40,8 @@ def print_feedback(guess, target, len):
     return
 
 
-def random_target(LEN: int) -> str:
-    tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
+def random_target(len: int) -> str:
+    tlist = pathlib.Path("targets_" + str(len) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
     target = random.choice(tlist)
     return target
 
@@ -49,6 +49,7 @@ def random_target(LEN: int) -> str:
 LEN = 5
 GUESSES = 6
 LETTERS = [letter for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']
+# TODO: hint unused letters
 
 # main loop
 
