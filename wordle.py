@@ -36,7 +36,7 @@ def print_feedback(guess, target): # pass LEN as param
 
 
 def random_target(LEN: int) -> str:
-    tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split(" ")
+    tlist = pathlib.Path("targets_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
     target = random.choice(tlist)
     return target
 
