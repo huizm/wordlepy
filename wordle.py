@@ -2,7 +2,16 @@ import pathlib
 import random
 
 
-def print_feedback():
+# TODO: this func is not like a python func and must be rewritten
+def print_feedback(guess, target): # pass LEN as param
+    """
+    Compare guess word with target and give feedback.
+
+    >>> print_feedback("CRANE", "RAINY")
+    C R A N E
+    ⬛🟨🟨🟩⬛
+    
+    """
     for char in guess[:-1:]:
         print(char, end=" ")
     print(guess[-1])
@@ -11,12 +20,18 @@ def print_feedback():
     for j in range(0, LEN):
         if guess[j] == target_chars[j]:
             print("🟩", end="")
+            target_chars[j] = 0
         elif guess[j] in target_chars:
             print("🟨", end="")
+
+            # find first non-matching letter and remove it in target_chars
+            for k in range(0, LEN):
+                if target_chars[k] == guess[j] and target_chars[k] != guess[k]:
+                    target_chars[k] = 0
         else:
             print("⬛", end="")
-    print()
 
+    print()
     return
 
 
@@ -28,6 +43,9 @@ def random_target(LEN: int) -> str:
 
 LEN = 5
 GUESSES = 6
+LETTERS = [letter for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']
+
+# main loop
 
 # list of all valid words
 wlist = pathlib.Path("words_" + str(LEN) + ".txt").read_text(encoding="utf-8").strip().upper().split("\n")
@@ -45,15 +63,15 @@ while guess_count < GUESSES:
         print("Guess", guess_count+1)
 
         if guess == target:
-            print_feedback()
+            print_feedback(guess, target)
             print("Correct!")
             break
         else:
-            print_feedback()
+            print_feedback(guess, target)
             print("Wrong...")
         guess_count += 1
 
     prompt = "\n" # not show valid try from second try
 else:
     if guess_count >= GUESSES:
-        print("Barge. The target was", target)
+        print(F"Barge. The target was {target}.")
