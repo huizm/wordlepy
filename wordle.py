@@ -3,13 +3,18 @@ import random
 
 
 # TODO: this func is not like a python func and must be rewritten
-def print_feedback(guess, target): # pass LEN as param
+# TODO: fix doctest
+def print_feedback(guess, target, len):
     """
     Compare guess word with target and give feedback.
 
-    >>> print_feedback("CRANE", "RAINY")
+    >>> print_feedback("CRANE", "RAINY", 5)
     C R A N E
     ⬛🟨🟨🟩⬛
+    
+    >>> print_feedback("LEMMA", "MOUNT", 5)
+    L E M M A
+    ⬛⬛🟨⬛⬛
     
     """
     for char in guess[:-1:]:
@@ -17,7 +22,7 @@ def print_feedback(guess, target): # pass LEN as param
     print(guess[-1])
     
     target_chars = list(target)
-    for j in range(0, LEN):
+    for j in range(0, len):
         if guess[j] == target_chars[j]:
             print("🟩", end="")
             target_chars[j] = 0
@@ -25,7 +30,7 @@ def print_feedback(guess, target): # pass LEN as param
             print("🟨", end="")
 
             # find first non-matching letter and remove it in target_chars
-            for k in range(0, LEN):
+            for k in range(0, len):
                 if target_chars[k] == guess[j] and target_chars[k] != guess[k]:
                     target_chars[k] = 0
         else:
@@ -63,11 +68,11 @@ while guess_count < GUESSES:
         print("Guess", guess_count+1)
 
         if guess == target:
-            print_feedback(guess, target)
+            print_feedback(guess, target, LEN)
             print("Correct!")
             break
         else:
-            print_feedback(guess, target)
+            print_feedback(guess, target, LEN)
             print("Wrong...")
         guess_count += 1
 
