@@ -13,7 +13,7 @@ class Wordle:
         self.len = len
         self.guesses = guesses
 
-    def main(self):
+    def create(self):
         """
         Main loop of the game. Implicitly takes variable len, guesses and constant LETTERS.
         """
@@ -100,4 +100,4 @@ class Wordle:
 
 if __name__ == "__main__":
     game = Wordle(5, 6)
-    game.main()
+    game.create()
