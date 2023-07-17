@@ -9,9 +9,10 @@ class Wordle:
     """
     Prototype of the game.
     """
-    def __init__(self, len, guesses):
+    def __init__(self, len: int, guesses: int):
         self.len = len
         self.guesses = guesses
+        return
 
     def create(self):
         """
